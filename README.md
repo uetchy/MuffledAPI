@@ -1,6 +1,4 @@
-# muffledapi
-
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+# MuffledAPI
 
 > Wrap API
 
@@ -17,12 +15,26 @@ TODO: Fill out this long description.
 
 ## Install
 
-```
+```session
+npm install muffled
+yarn add muffled
 ```
 
 ## Usage
 
-```
+```js
+const { Muffled, bearerAuth } = require('muffled')
+
+const SpotifyAPI = Muffled('https://api.spotify.com/v1')
+
+// Inject "Authorization: Bearer <token>" header into every request
+SpotifyAPI.use(bearerAuth(process.env.SPOTIFY_TOKEN))
+
+// Search for musics
+SpotifyAPI.search({
+  q: 'roadhouse blues',
+  type: 'album,track',
+})
 ```
 
 ## API
