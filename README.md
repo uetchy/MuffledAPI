@@ -1,5 +1,8 @@
 # MuffledAPI
 
+[![Build Status](https://travis-ci.org/uetchy/MuffledAPI.svg?branch=master)](https://travis-ci.org/uetchy/MuffledAPI)
+[![Coverage Status](https://coveralls.io/repos/github/uetchy/MuffledAPI/badge.svg?branch=master)](https://coveralls.io/github/uetchy/MuffledAPI?branch=master)
+
 Fully-automated API wrapper for JavaScript.
 
 ## Table of Contents
