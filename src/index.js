@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-unfetch'
-import { URLSearchParams, resolve } from 'url'
+import url from 'url'
 
 export class Muffled {
   /**
@@ -8,7 +8,12 @@ export class Muffled {
    */
   constructor(endpoint, options) {
     this._options = options
-    this._endpoint = endpoint.replace(/([^\/])$/, '$1/') // append '/' at the end of url
+
+    const parsedURL = url.parse(endpoint)
+    this._endpoint = parsedURL.protocol
+      ? parsedURL.href
+      : 'https://' + parsedURL.href
+    this._endpoint = this._endpoint.replace(/([^\/])$/, '$1/') // append '/' at the end of url
     this._paths = []
     this._middlewares = []
 
@@ -27,7 +32,7 @@ export class Muffled {
 
   _handleGet(target, name) {
     if (name in target || name === 'methodMissing') {
-      console.log('#matched', name)
+      console.debug('#matched', name)
       return target[name]
     }
 
@@ -42,7 +47,7 @@ export class Muffled {
 
       return new Proxy(() => null, {
         apply: (target, name, argumentsList) => {
-          const urlPath = this._paths.join()
+          const urlPath = this._paths.join('/')
 
           // clear paths list as the caller invoked
           this._paths = []
@@ -58,7 +63,8 @@ export class Muffled {
   }
 
   async _query(paths, args) {
-    const entrypoint = resolve(this._endpoint, paths)
+    const entrypoint = url.resolve(this._endpoint, paths)
+    console.debug('#entry', entrypoint)
 
     let compositedArgs = {}
     for (const middleware of this._middlewares) {
@@ -66,7 +72,7 @@ export class Muffled {
     }
 
     const res = await fetch(
-      entrypoint + '?' + new URLSearchParams(args),
+      entrypoint + '?' + new url.URLSearchParams(args),
       compositedArgs
     )
 
