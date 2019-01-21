@@ -6,7 +6,9 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7cac3d6459fd41739741b0bfa0f78480)](https://www.codacy.com/app/uetchy/MuffledAPI?utm_source=github.com&utm_medium=referral&utm_content=uetchy/MuffledAPI&utm_campaign=Badge_Grade)
 ![](https://img.shields.io/github/last-commit/uetchy/MuffledAPI.svg)
 
-> **Muffled API** is a library generates a client for any API.
+# Muffled API 🧣
+
+> Generates a wrapper for any API.
 
 ## Table of Contents
 
