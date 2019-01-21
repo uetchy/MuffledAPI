@@ -9,17 +9,15 @@ function bearerAuth(token) {
 }
 
 describe('Muffled', () => {
-  describe('#new()', () => {
-    it('return Proxy', async () => {
-      const api = new Muffled('https://api.spotify.com/v1')
+  it('return Proxy', async () => {
+    const api = new Muffled('https://api.spotify.com/v1')
 
-      api.use(bearerAuth(process.env.SPOTIFY_TOKEN))
+    api.use(bearerAuth(process.env.SPOTIFY_TOKEN))
 
-      const result = await api.search({ q: 'tree', type: 'album' })
-      assert.equal(
-        result.albums.href,
-        'https://api.spotify.com/v1/search?query=tree&type=album&market=JP&offset=0&limit=20'
-      )
-    })
+    const result = await api.search({ q: 'tree', type: 'album' })
+    assert.equal(
+      result.albums.href,
+      'https://api.spotify.com/v1/search?query=tree&type=album&market=JP&offset=0&limit=20'
+    )
   })
 })
