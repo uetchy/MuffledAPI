@@ -1,11 +1,13 @@
-import url from 'url'
 import fetch from 'isomorphic-unfetch'
-import { URLSearchParams } from 'url'
+import { URLSearchParams, resolve } from 'url'
 
 export class Muffled {
+  /**
+   * Create Muffled API wrapper
+   * @param {String} endpoint
+   */
   constructor(endpoint) {
-    console.log('#construct', endpoint)
-    this._endpoint = endpoint
+    this._endpoint = endpoint.replace(/([^\/])$/, '$1/') // append '/' at the end of url
     this._paths = []
     this._middlewares = []
 
@@ -14,8 +16,11 @@ export class Muffled {
     })
   }
 
+  /**
+   * Add middleware function
+   * @param {Function} middleware
+   */
   use(middleware) {
-    console.log('#use', this)
     this._middlewares.push(middleware)
   }
 
@@ -26,20 +31,23 @@ export class Muffled {
     }
 
     if (typeof name === 'string') {
-      console.log('Proxy.get', name)
-      console.log('this:', this)
-      console.log('target:', target)
+      // clear paths list if this func is called in the same
       if (this === target) {
         this._paths = []
       }
+
+      // add path to chain
       this._paths.push(name)
+
       return new Proxy(() => null, {
         apply: (target, name, argumentsList) => {
-          const paths = this._paths
+          const urlPath = this._paths.join()
+
+          // clear paths list as the caller invoked
           this._paths = []
-          console.log('#apply inner', paths, argumentsList)
+
           return this._query(
-            paths.join('/'),
+            urlPath,
             argumentsList.length > 0 ? argumentsList[0] : {}
           )
         },
@@ -49,19 +57,22 @@ export class Muffled {
   }
 
   async _query(paths, args) {
-    const entrypoint = url.resolve(this._endpoint + '/', paths)
-    console.log('#query', entrypoint, args)
+    const entrypoint = resolve(this._endpoint, paths)
+
     let compositedArgs = {}
     for (const middleware of this._middlewares) {
       compositedArgs = middleware(compositedArgs)
     }
-    console.log('comp', compositedArgs)
 
     const res = await fetch(
       entrypoint + '?' + new URLSearchParams(args),
       compositedArgs
     )
 
-    return await res.json()
+    // parse JSON
+    // TODO: make it compatible with any response
+    const json = await res.json()
+
+    return json
   }
 }
