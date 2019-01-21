@@ -1,9 +1,5 @@
 # MuffledAPI
 
-> Wrap API
-
-TODO: Fill out this long description.
-
 ## Table of Contents
 
 - [Install](#install)
@@ -15,7 +11,7 @@ TODO: Fill out this long description.
 
 ## Install
 
-```session
+```bash
 npm install muffled
 yarn add muffled
 ```
@@ -23,7 +19,7 @@ yarn add muffled
 ## Usage
 
 ```js
-const { Muffled, bearerAuth, tokenQueryAuth } = require('muffled')
+const { Muffled, bearerAuth } = require('muffled')
 
 /**
  * Spotify API
@@ -38,16 +34,6 @@ const result = await SpotifyAPI.search({
   q: 'roadhouse blues',
   type: 'album,track',
 })
-
-/**
- * GitHub API
- */
-const GitHubAPI = Muffled('https://api.github.com/v2')
-
-// Inject "?token=<token>" query string into every request
-GitHubAPI.use(tokenQueryAuth(process.env.GITHUB_TOKEN))
-
-const result = await GitHubAPI.repository()
 ```
 
 ## API

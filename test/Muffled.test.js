@@ -8,7 +8,7 @@ describe('Muffled', () => {
       responseFormat: 'json',
     })
 
-    api.use(bearerAuth(process.env.SPOTIFY_TOKEN))
+    api.use(bearerAuth(process.env.SPOTIFY_TOKEN || 'anonymous'))
 
     const result = await api.search({ q: 'tree', type: 'album' })
     assert.equal(

@@ -5,8 +5,10 @@
   "author": "Yasuaki Uechi <y@uechi.io> (https://uechi.io/)",
   "main": "lib/index.js",
   "scripts": {
+    "build": "tsc",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "tsc -w",
-    "test": "tsc && nyc mocha"
+    "test": "npm run build && nyc mocha"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0"
