@@ -23,18 +23,31 @@ yarn add muffled
 ## Usage
 
 ```js
-const { Muffled, bearerAuth } = require('muffled')
+const { Muffled, bearerAuth, tokenQueryAuth } = require('muffled')
 
-const SpotifyAPI = Muffled('https://api.spotify.com/v1')
+/**
+ * Spotify API
+ */
+const SpotifyAPI = new Muffled('https://api.spotify.com/v1')
 
 // Inject "Authorization: Bearer <token>" header into every request
 SpotifyAPI.use(bearerAuth(process.env.SPOTIFY_TOKEN))
 
 // Search for musics
-SpotifyAPI.search({
+const result = await SpotifyAPI.search({
   q: 'roadhouse blues',
   type: 'album,track',
 })
+
+/**
+ * GitHub API
+ */
+const GitHubAPI = Muffled('https://api.github.com/v2')
+
+// Inject "?token=<token>" query string into every request
+GitHubAPI.use(tokenQueryAuth(process.env.GITHUB_TOKEN))
+
+const result = await GitHubAPI.repository()
 ```
 
 ## API

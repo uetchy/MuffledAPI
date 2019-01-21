@@ -4,10 +4,15 @@
   "version": "0.1.0",
   "author": "Yasuaki Uechi <y@uechi.io> (https://uechi.io/)",
   "main": "lib/index.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "test": "tsc && nyc mocha"
+  },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0"
   },
   "devDependencies": {
+    "@types/node": "^10.12.18",
     "coveralls": "^3.0.2",
     "mocha": "^5.2.0",
     "nock": "^10.0.6",
@@ -28,8 +33,5 @@
     "type": "git",
     "url": "https://github.com/uetchy/MuffledAPI.git"
   },
-  "types": "lib/index.d.ts",
-  "scripts": {
-    "dev": "tsc -w"
-  }
+  "types": "lib/index.d.ts"
 }
