@@ -50,7 +50,7 @@ This will create a class for given endpoint.
 
 You can also specify endpoint like:
 
-```
+```js
 new Muffled('api.spotify.com')
 new Muffled('https://api.spotify.com')
 new Muffled('https://api.spotify.com/v1')
@@ -60,9 +60,30 @@ new Muffled('https://api.spotify.com/v1')
 
 You can call any API query by passing property as a path string.
 
-```
+```js
 new Muffled('api.spotify.com').v1.search() // https://api.spotify.com/v1/search
 new Muffled('api.spotify.com/v1').search() // https://api.spotify.com/v1/search
+```
+
+You can also call them using partial components:
+
+```js
+const { user } = new Muffled('api.github.com')
+const userRepos = await user.repos()
+```
+
+## Authorization
+
+### OAuth Bearer Token
+
+```js
+const { Muffled, bearerAuth } = require('muffled')
+
+const API = new Muffled('api.github.com')
+
+API.use(bearerAuth(process.env.GITHUB_TOKEN))
+
+API.user.repos() // this will inject github token into Authorization header
 ```
 
 ## Maintainers
