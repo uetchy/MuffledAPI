@@ -6,7 +6,8 @@ export class Muffled {
    * Create Muffled API wrapper
    * @param {String} endpoint
    */
-  constructor(endpoint) {
+  constructor(endpoint, options) {
+    this._options = options
     this._endpoint = endpoint.replace(/([^\/])$/, '$1/') // append '/' at the end of url
     this._paths = []
     this._middlewares = []
@@ -74,5 +75,12 @@ export class Muffled {
     const json = await res.json()
 
     return json
+  }
+}
+
+export function bearerAuth(token) {
+  return args => {
+    args.headers = { Authorization: `Bearer ${token}` }
+    return args
   }
 }

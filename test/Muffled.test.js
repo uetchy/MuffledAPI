@@ -1,16 +1,12 @@
 const assert = require('assert')
-const { Muffled } = require('../lib')
 
-function bearerAuth(token) {
-  return args => {
-    args.headers = { Authorization: `Bearer ${token}` }
-    return args
-  }
-}
+const { Muffled, bearerAuth } = require('../lib')
 
 describe('Muffled', () => {
   it('return Proxy', async () => {
-    const api = new Muffled('https://api.spotify.com/v1')
+    const api = new Muffled('https://api.spotify.com/v1', {
+      responseFormat: 'json',
+    })
 
     api.use(bearerAuth(process.env.SPOTIFY_TOKEN))
 
