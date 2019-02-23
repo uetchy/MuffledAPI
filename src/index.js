@@ -85,7 +85,7 @@ export class Muffled {
 }
 
 export function bearerAuth(token) {
-  return args => {
+  return (args) => {
     args.headers = { Authorization: `Bearer ${token}` }
     return args
   }

@@ -4,6 +4,7 @@
   "version": "0.2.1",
   "author": "Yasuaki Uechi <y@uechi.io> (https://uechi.io/)",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -14,14 +15,14 @@
     "isomorphic-unfetch": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^10.12.18",
+    "@types/node": "^10.12.21",
     "@types/node-fetch": "^2.1.4",
     "coveralls": "^3.0.2",
     "mocha": "^5.2.0",
     "nock": "^10.0.6",
     "nyc": "^13.1.0",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.2.4"
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.1"
   },
   "bugs": {
     "url": "https://github.com/uetchy/MuffledAPI/issues"
@@ -38,6 +39,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/uetchy/MuffledAPI.git"
-  },
-  "types": "lib/index.d.ts"
+  }
 }
