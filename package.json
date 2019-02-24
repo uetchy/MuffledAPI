@@ -6,7 +6,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -r lib && tsc",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "tsc -w",
     "test": "npm run build && nyc mocha"
