@@ -32,7 +32,6 @@ export class Muffled {
 
   _handleGet(target, name) {
     if (name in target || name === 'methodMissing') {
-      console.debug('#matched', name)
       return target[name]
     }
 
@@ -64,7 +63,6 @@ export class Muffled {
 
   async _query(paths, args) {
     const entrypoint = url.resolve(this._endpoint, paths)
-    console.debug('#entry', entrypoint)
 
     let compositedArgs = {}
     for (const middleware of this._middlewares) {
