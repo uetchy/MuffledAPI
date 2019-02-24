@@ -15,14 +15,14 @@
     "isomorphic-unfetch": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^10.12.21",
-    "@types/node-fetch": "^2.1.4",
-    "coveralls": "^3.0.2",
-    "mocha": "^5.2.0",
+    "@types/node": "^11.9.5",
+    "@types/node-fetch": "^2.1.6",
+    "coveralls": "^3.0.3",
+    "mocha": "^6.0.1",
     "nock": "^10.0.6",
-    "nyc": "^13.1.0",
+    "nyc": "^13.3.0",
     "ts-node": "^8.0.2",
-    "typescript": "^3.3.1"
+    "typescript": "^3.3.3333"
   },
   "bugs": {
     "url": "https://github.com/uetchy/MuffledAPI/issues"
