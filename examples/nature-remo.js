@@ -6,7 +6,7 @@ async function main() {
    */
   const NatureRemo = new Muffled('api.nature.global/1')
 
-  // Inject "Authorization: Bearer <token>" header into every request
+  // OAuth2 Bearer Auth
   NatureRemo.use(bearerAuth(process.env.NATURE_REMO_TOKEN))
 
   // This will fetch resource from `https://api.nature.global/1/devices`

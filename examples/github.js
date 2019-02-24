@@ -6,11 +6,12 @@ async function main() {
    */
   const GitHubAPI = new Muffled('api.github.com')
 
-  // Inject "Authorization: Bearer <token>" header into every request
+  // OAuth2 Bearer Auth
   GitHubAPI.use(bearerAuth(process.env.GITHUB_TOKEN))
 
   // This will fetch resource from `https://api.github.com/user/repos`
-  const result = await GitHubAPI.user.repos()
+  const userAPI = GitHubAPI.user
+  const result = await userAPI.repos()
   console.log(result)
 }
 

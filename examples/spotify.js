@@ -4,13 +4,13 @@ async function main() {
   /**
    * Spotify API
    */
-  const SpotifyAPI = new Muffled('api.spotify.com')
+  const SpotifyAPI = new Muffled('api.spotify.com/v1')
 
-  // Inject "Authorization: Bearer <token>" header into every request
+  // OAuth2 Bearer Auth
   SpotifyAPI.use(bearerAuth(process.env.SPOTIFY_TOKEN))
 
   // This will fetch resource from `https://api.spotify.com/v1/search`
-  const result = await SpotifyAPI.v1.search({
+  const result = await SpotifyAPI.search({
     q: 'roadhouse blues',
     type: 'album,track',
   })
