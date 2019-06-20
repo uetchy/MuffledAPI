@@ -1,6 +1,6 @@
 ![Muffled API](https://uechi-public.s3.amazonaws.com/github/MuffledAPI/logo.png)
 
-[![Build Status](https://travis-ci.org/uetchy/MuffledAPI.svg?branch=master)](https://travis-ci.org/uetchy/MuffledAPI)
+[![Build Status](https://travis-ci.com/uetchy/MuffledAPI.svg?branch=master)](https://travis-ci.com/uetchy/MuffledAPI)
 [![Coverage Status](https://coveralls.io/repos/github/uetchy/MuffledAPI/badge.svg?branch=master)](https://coveralls.io/github/uetchy/MuffledAPI?branch=master)
 [![npm version](https://img.shields.io/npm/v/muffled.svg)](https://www.npmjs.com/package/muffled)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7cac3d6459fd41739741b0bfa0f78480)](https://www.codacy.com/app/uetchy/MuffledAPI?utm_source=github.com&utm_medium=referral&utm_content=uetchy/MuffledAPI&utm_campaign=Badge_Grade)
