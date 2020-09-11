@@ -1,18 +1,29 @@
 import fetch from 'isomorphic-unfetch'
 import url from 'url'
 
+export type IMiddleware = (args: RequestInit) => RequestInit
+
+type Diff<T, U> = T extends U ? never : T
+type AllArgs<T> = T extends (...args: (infer A)[]) => any ? A : never
+
 export class Muffled {
+  private _options: any
+  private _endpoint: string
+  private _paths: string[]
+  private _middlewares: IMiddleware[]
+  [i: string]: <R>(args: AllArgs<R>) => any
+
   /**
    * Create Muffled API wrapper
    * @param {String} endpoint
    */
-  constructor(endpoint, options) {
+  constructor(endpoint: string, options?: any) {
     this._options = options
 
     const parsedURL = url.parse(endpoint)
     this._endpoint = parsedURL.protocol
-      ? parsedURL.href
-      : 'https://' + parsedURL.href
+      ? parsedURL.href!
+      : 'https://' + parsedURL.href!
     this._endpoint = this._endpoint.replace(/([^\/])$/, '$1/') // append '/' at the end of url
     this._paths = []
     this._middlewares = []
@@ -26,11 +37,11 @@ export class Muffled {
    * Add middleware function
    * @param {Function} middleware
    */
-  use(middleware) {
+  use(middleware: IMiddleware) {
     this._middlewares.push(middleware)
   }
 
-  _handleGet(target, name) {
+  _handleGet(target: any, name: string): any {
     if (name in target || name === 'methodMissing') {
       return target[name]
     }
@@ -61,7 +72,7 @@ export class Muffled {
     }
   }
 
-  async _query(paths, args) {
+  async _query(paths: string, args: any) {
     const entrypoint = url.resolve(this._endpoint, paths)
 
     let compositedArgs = {}
@@ -82,7 +93,7 @@ export class Muffled {
   }
 }
 
-export function bearerAuth(token) {
+export function bearerAuth(token: string): IMiddleware {
   return (args) => {
     args.headers = { Authorization: `Bearer ${token}` }
     return args

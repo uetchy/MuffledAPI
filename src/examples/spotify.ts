@@ -1,4 +1,4 @@
-const { Muffled, bearerAuth } = require('muffled')
+import { Muffled, bearerAuth } from '..'
 
 async function main() {
   /**
@@ -7,7 +7,7 @@ async function main() {
   const SpotifyAPI = new Muffled('api.spotify.com/v1')
 
   // OAuth2 Bearer Auth
-  SpotifyAPI.use(bearerAuth(process.env.SPOTIFY_TOKEN))
+  SpotifyAPI.use(bearerAuth(process.env.SPOTIFY_TOKEN!))
 
   // This will fetch resource from `https://api.spotify.com/v1/search`
   const result = await SpotifyAPI.search({
