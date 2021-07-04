@@ -3,41 +3,41 @@
   "description": "MuffledAPI",
   "version": "0.3.1",
   "author": "Yasuaki Uechi <y@uechi.io> (https://uechi.io/)",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf lib && tsc",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "tsc -w",
     "test": "npm run build && nyc mocha"
   },
+  "types": "lib/index.d.ts",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "dependencies": {
-    "isomorphic-unfetch": "^3.0.0"
+    "isomorphic-unfetch": "^3.1.0"
   },
   "devDependencies": {
-    "@types/node": "^11.9.5",
-    "@types/node-fetch": "^2.1.6",
-    "coveralls": "^3.0.3",
-    "mocha": "^6.0.1",
-    "nock": "^10.0.6",
-    "nyc": "^13.3.0",
-    "ts-node": "^8.0.2",
-    "typescript": "3.2.4"
+    "@types/node": "^16.0.0",
+    "@types/node-fetch": "^2.5.10",
+    "coveralls": "^3.1.1",
+    "mocha": "^9.0.2",
+    "nock": "^13.1.0",
+    "nyc": "^15.1.0",
+    "ts-node": "^10.0.0",
+    "typescript": "4.3.5"
+  },
+  "homepage": "https://github.com/uetchy/MuffledAPI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uetchy/MuffledAPI.git"
   },
   "bugs": {
     "url": "https://github.com/uetchy/MuffledAPI/issues"
   },
-  "files": [
-    "lib"
-  ],
-  "homepage": "https://github.com/uetchy/MuffledAPI",
+  "license": "MIT",
   "keywords": [
     "api",
     "wrapper"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/uetchy/MuffledAPI.git"
-  }
+  ]
 }
