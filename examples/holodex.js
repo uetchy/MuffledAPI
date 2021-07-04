@@ -1,4 +1,4 @@
-const { Muffled, headerAuth } = require("..");
+const { Muffled, headerAuth } = require("muffled");
 
 async function main() {
   /**
