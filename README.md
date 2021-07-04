@@ -31,21 +31,21 @@ yarn add muffled
 ## Usage
 
 ```js
-const { Muffled, bearerAuth } = require('muffled')
+const { Muffled, bearerAuth } = require("muffled");
 
 /**
  * Spotify API
  */
-const SpotifyAPI = new Muffled('api.spotify.com/v1')
+const SpotifyAPI = new Muffled("api.spotify.com/v1");
 
 // OAuth2 Bearer Authentication
-SpotifyAPI.use(bearerAuth(process.env.SPOTIFY_TOKEN))
+SpotifyAPI.use(bearerAuth(process.env.SPOTIFY_TOKEN));
 
 // This will fetch resource from `https://api.spotify.com/v1/search`
 const result = await SpotifyAPI.search({
-  q: 'roadhouse blues',
-  type: 'album,track',
-})
+  q: "roadhouse blues",
+  type: "album,track",
+});
 ```
 
 ## API
@@ -57,9 +57,9 @@ This will create a class for given endpoint.
 You can also specify endpoint like:
 
 ```js
-new Muffled('api.spotify.com')
-new Muffled('https://api.spotify.com')
-new Muffled('https://api.spotify.com/v1')
+new Muffled("api.spotify.com");
+new Muffled("https://api.spotify.com");
+new Muffled("https://api.spotify.com/v1");
 ```
 
 ### API call
@@ -67,15 +67,15 @@ new Muffled('https://api.spotify.com/v1')
 You can call any API query by passing property as a path string.
 
 ```js
-new Muffled('api.spotify.com').v1.search() // https://api.spotify.com/v1/search
-new Muffled('api.spotify.com/v1').search() // https://api.spotify.com/v1/search
+new Muffled("api.spotify.com").v1.search({ limit: 1 }); // GET https://api.spotify.com/v1/search?limit=1
+new Muffled("api.spotify.com/v1").search({ limit: 1 }, { query: "hey" }); // POST https://api.spotify.com/v1/search?limit=1 -F '{"query": "hey"}' -H contnet-type=application/json
 ```
 
 You can also call them using partial components:
 
 ```js
-const { user } = new Muffled('api.github.com')
-const userRepos = await user.repos()
+const { user } = new Muffled("api.github.com");
+const userRepos = await user.repos();
 ```
 
 ## Authorization
@@ -83,13 +83,25 @@ const userRepos = await user.repos()
 ### OAuth Bearer Token
 
 ```js
-const { Muffled, bearerAuth } = require('muffled')
+const { Muffled, bearerAuth } = require("muffled");
 
-const API = new Muffled('api.github.com')
+const API = new Muffled("api.github.com");
 
-API.use(bearerAuth(process.env.GITHUB_TOKEN))
+API.use(bearerAuth(process.env.GITHUB_TOKEN));
 
-API.user.repos() // this will inject github token into Authorization header
+API.user.repos(); // this will inject github token into Authorization header
+```
+
+### Generic Header Auth
+
+```js
+const { Muffled, headerAuth } = require("muffled");
+
+const API = new Muffled("holodex.net");
+
+API.use(headerAuth("x-apikey", process.env.HOLODEX_TOKEN));
+
+API.live(); // this will inject apikey into x-apikey header
 ```
 
 ## Maintainers
