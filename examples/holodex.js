@@ -1,10 +1,16 @@
-const { Muffled, headerAuth } = require("muffled");
+const { Muffled, headerAuth } = require("..");
 
 async function main() {
   /**
    * Holodex API
    */
-  const Holodex = new Muffled("holodex.net/api/v2");
+  const Holodex = new Muffled("holodex.net/api/v2", {
+    overrides: {
+      "/search": {
+        method: "POST",
+      },
+    },
+  });
 
   // Access token auth
   Holodex.use(headerAuth("x-apikey", process.env.HOLODEX_TOKEN));
@@ -13,10 +19,12 @@ async function main() {
   const liveStreams = await Holodex.live({ org: "Hololive", status: "live" });
   console.log(liveStreams[0]);
 
-  const searchResult = await Holodex.search.videoSearch(
-    {},
-    { sort: "newest", offset: 0, limit: 1, target: ["stream"] }
-  );
+  const searchResult = await Holodex.search.videoSearch({
+    sort: "newest",
+    offset: 0,
+    limit: 1,
+    target: ["stream"],
+  });
   console.log(searchResult.slice(0, 2));
 }
 

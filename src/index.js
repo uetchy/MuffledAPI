@@ -1,5 +1,7 @@
 import fetch from "isomorphic-unfetch";
-import url from "url";
+import debug from "debug";
+
+const log = debug("muffled");
 
 export class Muffled {
   /**
@@ -7,12 +9,15 @@ export class Muffled {
    * @param {String} endpoint
    */
   constructor(endpoint, options) {
-    this._options = options;
+    this._options = options || {};
 
-    const parsedURL = url.parse(endpoint);
-    this._endpoint = parsedURL.protocol
-      ? parsedURL.href
-      : "https://" + parsedURL.href;
+    if (!endpoint.startsWith("http")) {
+      endpoint = "https://" + endpoint;
+    }
+
+    log("constructor", endpoint, options);
+
+    this._endpoint = endpoint;
     this._endpoint = this._endpoint.replace(/([^\/])$/, "$1/"); // append '/' at the end of url
     this._paths = [];
     this._middlewares = [];
@@ -31,6 +36,7 @@ export class Muffled {
   }
 
   _handleGet(target, name) {
+    log("get", name);
     if (name in target || name === "methodMissing") {
       return target[name];
     }
@@ -59,25 +65,49 @@ export class Muffled {
   }
 
   async _query(paths, params, args) {
-    const entrypoint = url.resolve(this._endpoint, paths);
+    log("query", paths, params, args);
+    const entrypoint = new URL(paths, this._endpoint).href;
+    log("entrypoint", entrypoint);
 
-    const isPost = args !== undefined;
-
-    let compositedArgs = {};
+    // apply middlewares
+    let compositedArgs = {
+      method: args !== undefined ? "POST" : "GET",
+    };
     for (const middleware of this._middlewares) {
       compositedArgs = middleware(compositedArgs);
     }
 
+    // apply overrides
+    if ("overrides" in this._options) {
+      for (const [path, args] of Object.entries(this._options.overrides)) {
+        if (paths.startsWith(path)) {
+          log("override", paths, args);
+          compositedArgs = { ...compositedArgs, ...args };
+        }
+      }
+    }
+
+    // POST mode
+    const isPost = compositedArgs.method === "POST";
     if (isPost) {
+      if (args === undefined) {
+        args = params;
+        params = {};
+      }
+
       const body = typeof args === "object" ? JSON.stringify(args) : args;
 
-      compositedArgs.method = "POST";
-      compositedArgs.headers["content-type"] = "application/json";
+      compositedArgs.headers = {
+        ...compositedArgs.headers,
+        "content-type": "application/json",
+      };
       compositedArgs.body = body;
     }
 
+    log("args", compositedArgs);
+
     const res = await fetch(
-      entrypoint + "?" + new url.URLSearchParams(params),
+      entrypoint + "?" + new URLSearchParams(params).toString(),
       compositedArgs
     );
 

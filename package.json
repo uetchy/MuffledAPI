@@ -5,9 +5,8 @@
   "author": "Yasuaki Uechi <y@uechi.io> (https://uechi.io/)",
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "tsc -w",
-    "test": "npm run build && nyc mocha"
+    "test": "npm run build && DEBUG=muffled jest"
   },
   "types": "lib/index.d.ts",
   "main": "lib/index.js",
@@ -15,15 +14,14 @@
     "lib"
   ],
   "dependencies": {
+    "debug": "^4.3.2",
     "isomorphic-unfetch": "^3.1.0"
   },
   "devDependencies": {
     "@types/node": "^16.0.0",
     "@types/node-fetch": "^2.5.10",
-    "coveralls": "^3.1.1",
-    "mocha": "^9.0.2",
+    "jest": "^27.0.6",
     "nock": "^13.1.0",
-    "nyc": "^15.1.0",
     "ts-node": "^10.0.0",
     "typescript": "4.3.5"
   },

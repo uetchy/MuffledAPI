@@ -1,14 +1,11 @@
 ![Muffled API](https://uechi-public.s3.amazonaws.com/github/MuffledAPI/logo.png)
 
-[![Build Status](https://travis-ci.com/uetchy/MuffledAPI.svg?branch=master)](https://travis-ci.com/uetchy/MuffledAPI)
-[![Coverage Status](https://coveralls.io/repos/github/uetchy/MuffledAPI/badge.svg?branch=master)](https://coveralls.io/github/uetchy/MuffledAPI?branch=master)
+[![Actions Status: test](https://github.com/uetchy/MuffledAPI/workflows/test/badge.svg)](https://github.com/uetchy/MuffledAPI/actions?query=test)
 [![npm version](https://img.shields.io/npm/v/muffled.svg)](https://www.npmjs.com/package/muffled)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7cac3d6459fd41739741b0bfa0f78480)](https://www.codacy.com/app/uetchy/MuffledAPI?utm_source=github.com&utm_medium=referral&utm_content=uetchy/MuffledAPI&utm_campaign=Badge_Grade)
-![Last commit](https://img.shields.io/github/last-commit/uetchy/MuffledAPI.svg)
 
 # Muffled API 🧣
 
-> Omnipotent API Client.
+> Omnipotent API Client armed with a power of `Proxy`.
 
 ## Table of Contents
 
@@ -69,6 +66,8 @@ You can call any API query by passing property as a path string.
 ```js
 new Muffled("api.spotify.com").v1.search({ limit: 1 }); // GET https://api.spotify.com/v1/search?limit=1
 new Muffled("api.spotify.com/v1").search({ limit: 1 }, { query: "hey" }); // POST https://api.spotify.com/v1/search?limit=1 -F '{"query": "hey"}' -H contnet-type=application/json
+
+new Muffled("holodex.net/api/v2").channels["UCMwGHR0BTZuLsmjY_NT5Pwg"](); // GET https://holodex.net/api/v2/channels/UCMwGHR0BTZuLsmjY_NT5Pwg
 ```
 
 You can also call them using partial components:
@@ -76,6 +75,20 @@ You can also call them using partial components:
 ```js
 const { user } = new Muffled("api.github.com");
 const userRepos = await user.repos();
+```
+
+### Method override
+
+```js
+const client = new Muffled("holodex.net/api/v2", {
+  overrides: {
+    "/search": {
+      method: "POST",
+    },
+  },
+});
+
+client.search.videoSearch({ query: "hey" }); // POST https://holodex.net/api/v2/search/videoSearch -F '{"query": "hey"}' -H contnet-type=application/json
 ```
 
 ## Authorization
