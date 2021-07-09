@@ -35,6 +35,6 @@ it("post with method overrides", async () => {
     },
   });
 
-  const result = await api.search.videoSearch({ org: "Hololive" });
+  const result = await api.search.videoSearch({ org: ["Hololive"] });
   expect(result[0].id).toBe("VfOmAbSU4R0");
 });
