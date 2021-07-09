@@ -1,4 +1,4 @@
-const { Muffled, bearerAuth } = require("../lib");
+const { Muffled, bearerAuth } = require("..");
 
 it("basic", async () => {
   const api = new Muffled("api.spotify.com");
