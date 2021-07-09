@@ -9,7 +9,6 @@
     "prepare": "husky install",
     "test": "npm run build && DEBUG=muffled jest"
   },
-  "types": "lib/index.d.ts",
   "main": "lib/index.js",
   "files": [
     "lib"
