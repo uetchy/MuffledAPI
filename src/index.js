@@ -8,8 +8,8 @@ export class Muffled {
    * Create Muffled API wrapper
    * @param {String} endpoint
    */
-  constructor(endpoint, options) {
-    this._options = options || {};
+  constructor(endpoint, options = {}) {
+    this._options = options;
 
     if (!endpoint.startsWith("http")) {
       endpoint = "https://" + endpoint;
