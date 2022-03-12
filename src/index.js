@@ -80,6 +80,7 @@ export class Muffled {
     }
 
     // apply overrides
+    // TODO: support nested rules
     if ("overrides" in this._options) {
       for (const [path, args] of Object.entries(this._options.overrides)) {
         if (paths.startsWith(path)) {
@@ -92,7 +93,8 @@ export class Muffled {
     // POST mode
     const isPost = compositedArgs.method === "POST";
     if (isPost) {
-      if (args === undefined) {
+      // NOTE: accepts both undefined and null
+      if (args == undefined) {
         args = params;
         params = {};
       }
@@ -115,9 +117,12 @@ export class Muffled {
 
     // parse JSON
     // TODO: make it compatible with any response
-    const json = await res.json();
-
-    return json;
+    try {
+      const json = await res.json();
+      return json;
+    } catch (err) {
+      throw new Error(`Invalid JSON response: ${await res.text()}`);
+    }
   }
 }
 
