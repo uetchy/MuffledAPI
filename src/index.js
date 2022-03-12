@@ -64,15 +64,17 @@ export class Muffled {
     }
   }
 
-  async _query(paths, params, args) {
+  async _query(paths, params, args, signal) {
     log("query", paths, params, args);
     const entrypoint = new URL(paths, this._endpoint).href;
     log("entrypoint", entrypoint);
 
-    // apply middlewares
     let compositedArgs = {
       method: args !== undefined ? "POST" : "GET",
+      signal,
     };
+
+    // apply middlewares
     for (const middleware of this._middlewares) {
       compositedArgs = middleware(compositedArgs);
     }
